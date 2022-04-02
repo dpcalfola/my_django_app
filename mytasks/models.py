@@ -5,6 +5,7 @@ from django.db import models
 
 class TodayTasks(models.Model):
     subject = models.CharField(max_length=200)
-    content = models.TextField()
+    contents = models.TextField()
     importance = models.IntegerField()
     created_date = models.DateTimeField()
+    is_completed = models.BooleanField(default=False)
