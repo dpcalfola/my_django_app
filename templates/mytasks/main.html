@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>my tasks</title>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'dist/css/bootstrap.css' %}">
+
+</head>
+<body>
+{# Greeting Message #}
+<div class="container my-5">
+    <h1>Hello World</h1>
+</div>
+
+{# Print TodayTasks Model#}
+<div class="container">
+    {% if today_tasks %}
+        {% for task in today_tasks %}
+            <h4>{{ task.subject }}</h4>
+            <p>{{ task.content }}</p>
+            <span>작성일: {{ task.created_date }} </span>
+            <br>
+            <span>중요도: {{ task.importance }}</span>
+        {% endfor %}
+    {% endif %}
+
+</div>
+
+<br><br><br>
+<hr>
+
+{# Table #}
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td colspan="2">Larry the Bird</td>
+            <td>@twitter</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<script src="{% static 'dist/js/bootstrap.js' %}"></script>
+</body>
+</html>

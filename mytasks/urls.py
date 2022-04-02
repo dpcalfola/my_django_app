@@ -4,5 +4,5 @@ from . import views
 app_name = 'pyfo'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.main, name='main'),
 ]
