@@ -1,79 +1,64 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>my tasks</title>
+{% extends 'mytasks/base.html' %}
+{% block content %}
+    {# Greeting Message #}
+    <div class="container my-5">
+        <h1>Hello World</h1>
+        <span> 현재 페이지: {{ today_obj.today_url }} </span> <br>
+        <span> 현재 시각 : {{ today_obj.today_datetime }}</span>
+    </div>
 
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'dist/css/bootstrap.css' %}">
+    {# Print TodayTasks Model#}
+    <div class="container">
+        {% if today_tasks %}
+            {% for task in today_tasks %}
+                <h4>{{ task.subject }}</h4>
+                <p>{{ task.contents }}</p>
+                <span>작성일: {{ task.created_date }} </span>
+                <br>
+                <span>중요도: {{ task.importance }}</span>
+                <br>
+                <span>완료여부: {{ task.is_completed }}</span>
+            {% endfor %}
+        {% endif %}
+        <br>
 
-</head>
-<body>
-{# Greeting Message #}
-<div class="container my-5">
-    <h1>Hello World</h1>
-    <span> 현재 페이지: {{ today_obj.today_url }} </span> <br>
-    <span> 현재 시각 : {{ today_obj.today_datetime }}</span>
-</div>
+        <a type="button" class="my-2 btn btn-info" href="{% url 'mytasks:today_url' today_obj.today_url %}">Today</a>
+    </div>
 
-{# Print TodayTasks Model#}
-<div class="container">
-    {% if today_tasks %}
-        {% for task in today_tasks %}
-            <h4>{{ task.subject }}</h4>
-            <p>{{ task.contents }}</p>
-            <span>작성일: {{ task.created_date }} </span>
-            <br>
-            <span>중요도: {{ task.importance }}</span>
-            <br>
-            <span>완료여부: {{ task.is_completed }}</span>
-        {% endfor %}
-    {% endif %}
-    <br>
+    <br><br><br>
+    <hr>
 
-    <a type="button" class="my-2 btn btn-info" href="{% url 'mytasks:today_url' today_obj.today_url %}">Today</a>
-</div>
+    {# Table #}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">Handle</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-<br><br><br>
-<hr>
-
-{# Table #}
-<div class="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-
-
-<script src="{% static 'dist/js/bootstrap.js' %}"></script>
-</body>
-</html>
+{% endblock %}
