@@ -8,10 +8,10 @@
     </div>
 
     {# Print TodayTasks Model#}
-    <div class="container">
+    <div class="container" id="main-area">
         {% if today_tasks %}
             {% for task in today_tasks %}
-                <h4>{{ task.subject }}</h4>
+                <h4>{{ task.title }}</h4>
                 <p>{{ task.contents }}</p>
                 <span>작성일: {{ task.created_date }} </span>
                 <br>
@@ -19,6 +19,9 @@
                 <br>
                 <span>완료여부: {{ task.is_completed }}</span>
             {% endfor %}
+        {% else %}
+            <h4>There are no today tasks</h4>
+            There are no today tasks
         {% endif %}
         <br>
 
