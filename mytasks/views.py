@@ -26,8 +26,8 @@ def main(request):
     }
     return render(request, 'mytasks/main.html', context)
 
-def today(request, today_url):
 
+def today(request, today_url):
     # TodayTasks model
     today_task_obj_list = TodayTasks.objects.order_by('created_date')
 
@@ -41,3 +41,7 @@ def today(request, today_url):
     }
 
     return render(request, 'mytasks/main.html', context)
+
+
+def bt_test(request):
+    return render(request, 'mytasks/base_template_test.html')
