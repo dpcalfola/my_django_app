@@ -42,6 +42,7 @@ DJANGO_APPS = [
 
 PROJECT_APPS = [
     'mytasks.apps.MytasksConfig',
+    'study_models.apps.StudyModelsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
