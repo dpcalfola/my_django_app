@@ -2,7 +2,7 @@
 {% block content %}
     {# Greeting Message #}
     <div class="container my-5">
-        <h1>Hello World</h1>
+        <h1>Hello World </h1>
         <span> 현재 페이지: {{ today_obj.today_url }} </span> <br>
         <span> 현재 시각 : {{ today_obj.today_datetime }}</span>
     </div>
@@ -11,21 +11,43 @@
     <div class="container" id="main-area">
         {% if today_tasks %}
             {% for task in today_tasks %}
-                <h4>{{ task.title }}</h4>
-                <p>{{ task.contents }}</p>
-                <span>작성일: {{ task.created_date }} </span>
-                <br>
-                <span>중요도: {{ task.importance }}</span>
-                <br>
-                <span>완료여부: {{ task.is_completed }}</span>
+                <div class="container m-4">
+                    <h4>{{ task.title }}</h4>
+                    <p>
+                        {% if task.contents %}
+                            {{ task.contents }}
+                            <br>
+                        {% endif %}
+
+                        <span>작성일: {{ task.created_date }} </span>
+                        <br>
+                        <span>중요도: {{ task.importance }}</span>
+                        <br>
+                        <span>완료여부: {{ task.is_completed }}</span>
+                    </p>
+
+                </div>
             {% endfor %}
         {% else %}
             <h4>There are no today tasks</h4>
-            There are no today tasks
         {% endif %}
+
         <br>
 
-        <a type="button" class="my-2 btn btn-info" href="{% url 'mytasks:today_url' today_obj.today_url %}">Today</a>
+        <a type="button" class="my-2 btn btn-info" href="{% url 'mytasks:today' today_obj.today_url %}">Today</a>
+
+        <br>
+
+        {# new task POST    #}
+        <form action="{% url 'mytasks:main' %}" method="POST">
+            {% csrf_token %}
+            <label>
+                <input type="text" name="task_title_input">
+            </label>
+            <input type="submit" class="btn btn-primary" value="Add task">
+        </form>
+
+
     </div>
 
     <br><br><br>

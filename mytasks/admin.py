@@ -2,6 +2,6 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import TodayTasks
+from .models import Task
 
-admin.site.register(TodayTasks)
+admin.site.register(Task)

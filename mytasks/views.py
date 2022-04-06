@@ -2,7 +2,9 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.shortcuts import redirect
-from .models import TodayTasks
+from django.utils import timezone
+
+from .models import Task
 from .operating_files import obj_date
 
 
@@ -13,8 +15,15 @@ from .operating_files import obj_date
 
 
 def main(request):
+    if request.method == 'POST':
+        input_title = request.POST.get('task_title_input')
+        new_task = Task()
+        new_task.title = input_title
+        new_task.created_date = timezone.now()
+        new_task.save()
+
     # TodayTasks model
-    today_tasks_obj_list = TodayTasks.objects.order_by('created_date')
+    today_tasks_obj_list = Task.objects.order_by('created_date')
 
     # datetime obj
     today_obj = obj_date.DateObj()
@@ -28,11 +37,11 @@ def main(request):
 
 
 def today(request, today_url):
-    # TodayTasks model
-    today_task_obj_list = TodayTasks.objects.order_by('created_date')
-
     # datetime obj
     today_obj = obj_date.DateObj()
+
+    # TodayTasks model
+    today_task_obj_list = Task.objects.order_by('created_date')
 
     # context
     context = {

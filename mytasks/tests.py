@@ -3,7 +3,7 @@ from django.test import TestCase, Client
 # Create your tests here.
 
 from bs4 import BeautifulSoup
-from .models import TodayTasks
+from .models import Task
 from .operating_files.obj_date import DateObj
 
 
@@ -30,20 +30,20 @@ class TestView(TestCase):
         response = self.client.get('/mytasks/' + today.today_url + '/')
         self.assertEqual(response.status_code, 200)
         # 2.2   If there's no today task,
-        self.assertEqual(TodayTasks.objects.count(), 0)
+        self.assertEqual(Task.objects.count(), 0)
         # 2.2.1 show message - "There are no today tasks"
         soup = BeautifulSoup(response.content, 'html.parser')
         main_area = soup.find('div', id='main-area')
         self.assertIn('There are no today tasks', main_area.text)
 
         # 2.2   There are two tasks,
-        task_001 = TodayTasks.objects.create(
+        task_001 = Task.objects.create(
             title="test",
         )
-        task_002 = TodayTasks.objects.create(
+        task_002 = Task.objects.create(
             title="test",
         )
-        self.assertEqual(TodayTasks.objects.count(), 2)
+        self.assertEqual(Task.objects.count(), 2)
         # 2.2.1 When refresh page
         response = self.client.get('/mytasks/' + today.today_url + '/')
         soup = BeautifulSoup(response.content, 'html.parser')
@@ -56,3 +56,8 @@ class TestView(TestCase):
 
         # 3.1   If no global task, show message - "There's no global task"
         # 3.2   If there are global tasks, it should be shown
+
+        # 4.0   Create TodayTasks object.
+        # 4.1   There is creating task form
+        # 4.2   If 'Create' button clicked task is added to task list
+        #
