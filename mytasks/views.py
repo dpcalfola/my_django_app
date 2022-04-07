@@ -52,6 +52,22 @@ def delete(request, task_pk):
         return redirect('mytasks:main')
 
 
+def complete(request, task_pk, is_complete):
+    if request.method == 'POST':
+        if is_complete == 'True':
+            task = get_object_or_404(Task, pk=task_pk)
+            task.is_completed = False
+            task.save()
+        else:
+            task = get_object_or_404(Task, pk=task_pk)
+            task.is_completed = True
+            task.save()
+        return redirect('mytasks:main')
+    else:
+        return redirect('mytasks:main')
+
+
+# postponed function
 def today(request, today_url):
     # datetime obj
     today_obj = obj_date.DateObj()
