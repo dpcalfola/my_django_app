@@ -12,19 +12,29 @@
         {% if today_tasks %}
             {% for task in today_tasks %}
                 <div class="container m-4">
-                    <h4>{{ task.title }}</h4>
-                    <p>
-                        {% if task.contents %}
-                            {{ task.contents }}
-                            <br>
-                        {% endif %}
+                    <div class="container">
+                        <h4>{{ task.title }}</h4>
+                        <p>
+                            {% if task.contents %}
+                                {{ task.contents }}
+                                <br>
+                            {% endif %}
 
-                        <span>작성일: {{ task.created_date }} </span>
-                        <br>
-                        <span>중요도: {{ task.importance }}</span>
-                        <br>
-                        <span>완료여부: {{ task.is_completed }}</span>
-                    </p>
+                            <span>작성일: {{ task.created_date }} </span>
+                            <br>
+                            <span>중요도: {{ task.importance }}</span>
+                            <br>
+                            <span>완료여부: {{ task.is_completed }}</span>
+                            <br>
+                        </p>
+                    </div>
+                    {#       Delete task button         #}
+                    <div class="container">
+                        <form action="{% url 'mytasks:delete' task.pk %}" method="post">
+                            {% csrf_token %}
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                    </div>
 
                 </div>
             {% endfor %}

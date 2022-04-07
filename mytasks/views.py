@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 from django.shortcuts import redirect
@@ -15,12 +15,19 @@ from .operating_files import obj_date
 
 
 def main(request):
+    # Create new task
     if request.method == 'POST':
         input_title = request.POST.get('task_title_input')
+
+        if input_title == '':
+            return redirect('mytasks:main')
+
         new_task = Task()
         new_task.title = input_title
         new_task.created_date = timezone.now()
         new_task.save()
+
+        return redirect('mytasks:main')
 
     # TodayTasks model
     today_tasks_obj_list = Task.objects.order_by('created_date')
@@ -34,6 +41,15 @@ def main(request):
         'today_obj': today_obj
     }
     return render(request, 'mytasks/main.html', context)
+
+
+def delete(request, task_pk):
+    if request.method == 'POST':
+        task = get_object_or_404(Task, pk=task_pk)
+        task.delete()
+        return redirect('mytasks:main')
+    else:
+        return redirect('mytasks:main')
 
 
 def today(request, today_url):
