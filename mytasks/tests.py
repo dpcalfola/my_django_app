@@ -24,18 +24,20 @@ class TestView(TestCase):
         soup = BeautifulSoup(response.content, 'html.parser')
         self.assertIn('mytasks', soup.title.text)
 
-    def test_main_today(self):
-        # 2.1   Success to open page - /mytasks/(today_url)/
-        today = DateObj()
-        response = self.client.get('/mytasks/' + today.today_url + '/')
-        self.assertEqual(response.status_code, 200)
-        # 2.2   If there's no today task,
-        self.assertEqual(Task.objects.count(), 0)
-        # 2.2.1 show message - "There are no today tasks"
-        soup = BeautifulSoup(response.content, 'html.parser')
-        main_area = soup.find('div', id='main-area')
-        self.assertIn('There are no today tasks', main_area.text)
+    # ------ This test is postponed -------
+    # def test_main_today(self):
+    #     # 2.1   Success to open page - /mytasks/(today_url)/
+    #     today = DateObj()
+    #     response = self.client.get('/mytasks/' + today.today_url + '/')
+    #     self.assertEqual(response.status_code, 200)
+    #     # 2.2   If there's no today task,
+    #     self.assertEqual(Task.objects.count(), 0)
+    #     # 2.2.1 show message - "There are no today tasks"
+    #     soup = BeautifulSoup(response.content, 'html.parser')
+    #     main_area = soup.find('div', id='main-area')
+    #     self.assertIn('There are no today tasks', main_area.text)
 
+    def test_show_test(self):
         # 2.2   There are two tasks,
         task_001 = Task.objects.create(
             title="test",
@@ -45,7 +47,7 @@ class TestView(TestCase):
         )
         self.assertEqual(Task.objects.count(), 2)
         # 2.2.1 When refresh page
-        response = self.client.get('/mytasks/' + today.today_url + '/')
+        response = self.client.get('/mytasks/')
         soup = BeautifulSoup(response.content, 'html.parser')
         # 2.2.2 There are two title
         main_area = soup.find('div', id='main-area')
